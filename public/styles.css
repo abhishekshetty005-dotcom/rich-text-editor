@@ -1,12 +1,58 @@
 :root {
+  color-scheme: light;
   --bg: #f6f7f9;
   --panel: #ffffff;
   --border: #dfe2e7;
   --text: #1f2328;
   --muted: #6b7280;
+  --hover: #eef0f3;
   --accent: #2563eb;
+  --accent-hover: #1d4ed8;
   --accent-soft: #e8efff;
+  --on-accent: #ffffff;
   --danger: #dc2626;
+  --danger-soft: #fdecec;
+  --quote: #4b5563;
+  --code-bg: #f3f4f6;
+}
+
+/* Dark palette: applied when chosen explicitly, or when following a dark OS setting. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f1115;
+  --panel: #181b21;
+  --border: #2c313a;
+  --text: #e6e8eb;
+  --muted: #8b929c;
+  --hover: #252a32;
+  --accent: #5b8def;
+  --accent-hover: #74a0f5;
+  --accent-soft: #1e2a44;
+  --on-accent: #0f1115;
+  --danger: #f87171;
+  --danger-soft: #3a1d1f;
+  --quote: #b3b9c2;
+  --code-bg: #22262e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0f1115;
+    --panel: #181b21;
+    --border: #2c313a;
+    --text: #e6e8eb;
+    --muted: #8b929c;
+    --hover: #252a32;
+    --accent: #5b8def;
+    --accent-hover: #74a0f5;
+    --accent-soft: #1e2a44;
+    --on-accent: #0f1115;
+    --danger: #f87171;
+    --danger-soft: #3a1d1f;
+    --quote: #b3b9c2;
+    --code-bg: #22262e;
+  }
 }
 
 * { box-sizing: border-box; }
@@ -31,12 +77,12 @@ button {
   cursor: pointer;
   min-width: 32px;
 }
-button:hover { background: #eef0f3; }
+button:hover { background: var(--hover); }
 button.active { background: var(--accent-soft); color: var(--accent); }
-button.primary { background: var(--accent); color: #fff; }
-button.primary:hover { background: #1d4ed8; }
+button.primary { background: var(--accent); color: var(--on-accent); }
+button.primary:hover { background: var(--accent-hover); }
 button.danger { color: var(--danger); border-color: var(--border); }
-button.danger:hover { background: #fdecec; }
+button.danger:hover { background: var(--danger-soft); }
 
 /* Sidebar */
 .sidebar {
@@ -62,7 +108,7 @@ button.danger:hover { background: #fdecec; }
   cursor: pointer;
   margin-bottom: 2px;
 }
-.doc-list li:hover { background: #f1f3f5; }
+.doc-list li:hover { background: var(--hover); }
 .doc-list li.selected { background: var(--accent-soft); }
 .doc-list .doc-title { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
 .doc-list .doc-date { font-size: 12px; color: var(--muted); }
@@ -119,7 +165,7 @@ button.danger:hover { background: #fdecec; }
   text-decoration: underline 3px #d33;
 }
 .color.highlight { text-decoration-color: #ffeb3b; }
-.color:hover { background: #eef0f3; }
+.color:hover { background: var(--hover); }
 .color input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 
 .editor {
@@ -140,10 +186,10 @@ button.danger:hover { background: #fdecec; }
   margin: 1em 0;
   padding: 4px 16px;
   border-left: 4px solid var(--border);
-  color: #4b5563;
+  color: var(--quote);
 }
 .editor pre {
-  background: #f3f4f6;
+  background: var(--code-bg);
   padding: 12px 16px;
   border-radius: 6px;
   font-family: ui-monospace, Consolas, monospace;
@@ -151,7 +197,31 @@ button.danger:hover { background: #fdecec; }
   white-space: pre-wrap;
 }
 .editor a { color: var(--accent); }
+/* Highlights are light colors; keep their text dark so it stays readable in dark mode.
+   An inline text color on the same element still wins. */
+.editor [style*="background-color"] { color: #1f2328; }
 .editor hr { border: none; border-top: 1px solid var(--border); margin: 1.5em 0; }
+
+/* Theme switcher */
+.theme-switcher {
+  display: flex;
+  gap: 2px;
+  margin: 8px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+}
+.theme-switcher button {
+  flex: 1;
+  font-size: 13px;
+  padding: 4px 6px;
+}
+.theme-switcher button[aria-pressed="true"] {
+  background: var(--panel);
+  color: var(--accent);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
+}
 
 .footer {
   padding: 0 24px 12px;

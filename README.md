@@ -10,6 +10,7 @@ A simple, self-hosted rich text editor. Node.js + Express backend, vanilla JS fr
 - Multiple documents with autosave (and `Ctrl+S` to save immediately)
 - Pasted and loaded HTML is sanitized to a safe subset of tags
 - Word and character count
+- Light, dark, and system-matched themes (remembered per browser)
 
 ## Run with Docker
 

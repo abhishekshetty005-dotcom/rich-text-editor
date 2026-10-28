@@ -217,6 +217,35 @@ function updateCounts() {
   $('#counts').textContent = `${words} word${words === 1 ? '' : 's'} · ${text.length} character${text.length === 1 ? '' : 's'}`;
 }
 
+// ---------- Theme ----------
+// "light" / "dark" set data-theme on <html>; "system" removes it so CSS follows prefers-color-scheme.
+
+function getTheme() {
+  try {
+    const theme = localStorage.getItem('theme');
+    return theme === 'light' || theme === 'dark' ? theme : 'system';
+  } catch (e) {
+    return 'system';
+  }
+}
+
+function setTheme(theme) {
+  if (theme === 'system') delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = theme;
+  try {
+    if (theme === 'system') localStorage.removeItem('theme');
+    else localStorage.setItem('theme', theme);
+  } catch (e) {}
+  document.querySelectorAll('[data-theme-option]').forEach((btn) => {
+    btn.setAttribute('aria-pressed', String(btn.dataset.themeOption === theme));
+  });
+}
+
+document.querySelectorAll('[data-theme-option]').forEach((btn) => {
+  btn.addEventListener('click', () => setTheme(btn.dataset.themeOption));
+});
+setTheme(getTheme());
+
 // ---------- Wiring ----------
 
 document.execCommand('defaultParagraphSeparator', false, 'p');
