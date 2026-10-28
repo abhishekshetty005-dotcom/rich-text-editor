@@ -26,7 +26,7 @@ pipeline {
             steps {
                 sh '''
                     set -eu
-					sh "whoami"
+					echo whoami
                     test -f Dockerfile
                     test -f docker-compose.yml
                     docker --version
