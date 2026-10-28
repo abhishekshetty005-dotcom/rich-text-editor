@@ -4,6 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rich Text Editor</title>
+  <script>
+    // Apply the saved theme before first paint to avoid a flash of the wrong theme.
+    try {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+    } catch (e) {}
+  </script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,6 +20,11 @@
       <button id="new-doc" class="primary" title="New document">+ New</button>
     </div>
     <ul id="doc-list" class="doc-list"></ul>
+    <div class="theme-switcher" role="group" aria-label="Theme">
+      <button data-theme-option="light" title="Light theme">&#9728; Light</button>
+      <button data-theme-option="dark" title="Dark theme">&#9790; Dark</button>
+      <button data-theme-option="system" title="Follow system setting">&#9881; System</button>
+    </div>
   </aside>
 
   <main class="main">
