@@ -1,0 +1,13 @@
+services:
+  editor:
+    build: .
+    image: rich-text-editor
+    container_name: rich-text-editor
+    ports:
+      - "3000:3000"
+    volumes:
+      - editor-data:/data
+    restart: unless-stopped
+
+volumes:
+  editor-data:
